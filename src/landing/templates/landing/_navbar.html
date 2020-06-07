@@ -1,0 +1,27 @@
+{% block navbar %}
+
+<ul class="nav navbar-nav menu_nav justify-content-end">
+    <li {% if active_link == "landing" %} class="nav-item active" {% endif %} ><a class="nav-link" href="#">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="feature.html">Feature</a></li>
+    <li class="nav-item"><a class="nav-link" href="pricing.html">Price</a>
+    <li class="nav-item submenu dropdown">
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+        aria-expanded="false">Pages</a>
+      <ul class="dropdown-menu">
+        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="blog-details.html">Blog Details</a></li>
+      </ul>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    <li class="nav-item"><a class="nav-link" href="login.html">Log in</a></li>
+    <li class="nav-item"><a class="nav-link" href="login.html">Sign up</a></li>
+  </ul>
+
+  <ul class="navbar-right">
+    <li class="nav-item">
+      <button class="button btn-lg">Go to App</button>
+    </li>
+  </ul>
+
+
+{%endblock navbar%}
