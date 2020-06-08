@@ -19,10 +19,12 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('landing.urls'), name="landing"),
+    path('home', include('landing.urls'), name="home"),
+    path('index', include('landing.urls'), name="index"),
     path('admin/', admin.site.urls),
-    path("app/", include('appcenter.urls'), name="app"),
+    path('app/', include('appcenter.urls'), name='app'),
     path("accounts/", include('accounts.urls'), name="accounts"),
 ]
 
 
-# handler404 = 'landing.views.page_not_found_404'
+handler404 = 'landing.views.page_not_found_404'

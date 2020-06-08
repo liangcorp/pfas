@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import update_session_auth_hash
@@ -16,6 +17,7 @@ def login_user(request):
     if user is not None:
         login(request, user)
         # Redirect to a success page.
+        redirect('/app/')
 
     else:
         # Return an 'invalid login' error message.

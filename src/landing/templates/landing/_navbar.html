@@ -13,13 +13,13 @@
       </ul>
     </li>
     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-    <li class="nav-item"><a class="nav-link" href="login.html">Log in</a></li>
-    <li class="nav-item"><a class="nav-link" href="login.html">Sign up</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log in</a></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Sign up</a></li>
   </ul>
 
   <ul class="navbar-right">
     <li class="nav-item">
-      <button class="button btn-lg">Go to App</button>
+      <a class="nav-link" href="{% url 'appcenter' %}"><button class="button btn-lg">Go to App</button></a>
     </li>
   </ul>
 

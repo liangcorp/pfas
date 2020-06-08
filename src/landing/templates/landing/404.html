@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{% include "_brandname.html" %} :: 404{% endblock %}
+
+
+{% block header %}
+<header class="header_area bg-gradient-primary">
+    <div class="main_menu">
+        <div class="container box_1620">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <a class="navbar-brand logo_h" href="{% url 'accounts' %}"><img src="{% static 'site/img/pfas_logo.png' %}" alt=""></a>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+
+
+{% block styles %}
+<!-- Custom fonts for this template-->
+<link href="{% static 'sb-admin-2/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+<link
+  href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+  rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="{% static 'sb-admin-2/css/sb-admin-2.min.css' %}" rel="stylesheet">
+{% endblock styles %}
+
+<body>
+
+{% block content %}
+<!-- 404 Error Text -->
+<div class="text-center">
+    <div class="error mx-auto" data-text="404">404</div>
+    <p class="lead text-gray-800 mb-5">Page Not Found</p>
+    <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
+    <a href="base.html">&larr; Back to Home</a>
+</div>
+
+</body>
+{% endblock content %}
+
+{% block scripts %}
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'sb-admin-2/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'sb-admin-2/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'sb-admin-2/js/sb-admin-2.min.js' %}"></script>
+{% endblock scripts %}
