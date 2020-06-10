@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from django.contrib.auth.forms import AuthenticationForm
-# from django import forms
+from django import forms
 # from crispy_forms.helper import FormHelper
 # from crispy_forms.layout import Layout, Submit, HTML, Field
 # from django.contrib.auth import forms as authforms
@@ -10,6 +10,11 @@ from .models import Login
 
 
 class LoginForm(AuthenticationForm):
+
+    username = forms.CharField(widget=forms.TextInput(
+                            attrs={'placeholder': 'Enter Your Email...'}
+                            ))
+    password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = Login

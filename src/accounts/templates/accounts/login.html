@@ -3,6 +3,9 @@
 {% load static %}
 {% block styles %}
 {% include "accounts/_styles.html"%}
+<style type="text/css">
+ul {list-style-type: none;}
+</style>
 {% endblock styles %}
 {% block title %}Log in{% endblock %}
 
@@ -27,11 +30,12 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Please Login</h1>
                   </div>
                   <form action='.' method='POST', class="user"> {% csrf_token %}
-                  {{ login_form|crispy }}
 
+                  <!-- TODO Modify the Cripy form so li won't show dot -->
+                  <div class="form-group">{{ login_form|crispy }}</div>
                   <!--
                     <div class="form-group">
                       <input type="username" class="form-control form-control-user" name="username"

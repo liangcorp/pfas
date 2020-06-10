@@ -10,16 +10,17 @@ from .forms import LoginForm
 
 
 def login_user(request):
-    if not request.user.is_authenticated:
-        login_form = LoginForm()
+    login_form = LoginForm()
 
-        context = {
-                        "login_form": login_form,
-        }
+    context = {
+                "login_form": login_form
+    }
+
+    if not request.user.is_authenticated:
 
         if request.method == "POST":
             login_form = LoginForm(data=request.POST)
-
+            print(login_form)
             if login_form.is_valid():
                 print(login_form.cleaned_data)
                 username = login_form.cleaned_data['username']
@@ -46,15 +47,20 @@ def login_user(request):
 
                 else:
                     # Return an 'invalid login' error message.
-                    context = {
-                        "login_form": login_form,
-                    }
+
+                    print("invalid login")
                     return render(request, "accounts/login.html", context)
             else:
+                context = {
+                    "login_form": login_form
+                }
                 print(login_form.errors)
+                return render(request, "accounts/login.html", context)
+
         return render(request, "accounts/login.html", context)
     else:
-        return redirect('/app/')
+        logout(request)
+        return redirect('landing')
 
 
 @login_required

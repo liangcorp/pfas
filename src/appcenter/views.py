@@ -7,14 +7,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 
 from assets.models import Asset
-
+from django.contrib.auth import logout
 User = get_user_model()
 
 # class CheckAuthApp(bracesviews.AnonymousRequiredMixin, authviews.LoginView):
 #    failed_url = reverse_lazy("home")
 
 
-# @login_required
+@login_required
 # Create your views here.
 def appcenter(request):
     latest_asset_list = Asset.objects.order_by('-asset_type')
@@ -22,6 +22,7 @@ def appcenter(request):
     context = {
         'latest_asset_list': latest_asset_list
     }
+    logout(request)
     return render(request, 'appcenter/appcenter.html', context)
 
 
