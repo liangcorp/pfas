@@ -1,35 +1,64 @@
 from __future__ import unicode_literals
 from django.contrib.auth.forms import AuthenticationForm
-from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, HTML, Field
-from django.contrib.auth import forms as authforms
-from django.urls import reverse
+# from django import forms
+# from crispy_forms.helper import FormHelper
+# from crispy_forms.layout import Layout, Submit, HTML, Field
+# from django.contrib.auth import forms as authforms
+# from django.urls import reverse
+
+from .models import Login
 
 
 class LoginForm(AuthenticationForm):
+
+    class Meta:
+        model = Login
+        fields = [
+            'username',
+            'password'
+        ]
+
+
+"""
+    email = forms.CharField(widget=forms.TextInput(
+                            attrs={'placeholder': 'Enter Your Email...'}
+                            ))
+
+    password = forms.CharField(widget=forms.PasswordInput())
+
     remember_me = forms.BooleanField(required=False, initial=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.fields["username"].widget.input_type = "email"  # ugly hack
+        # self.fields["username"].widget.input_type = "email"  # ugly hack
 
         self.helper.layout = Layout(
-            Field("username", placeholder="Enter Email", autofocus=""),
-            Field("password", placeholder="Enter Password"),
+            Field("username",
+                  placeholder="Enter Username...",
+                  css_class="form-control form-control-user",
+                  autofocus="",),
+
+            Field("password",
+                  placeholder="Password",
+                  css_class="form-control form-control-user",),
+
             HTML(
                 '<a href="{}">Forgot Password?</a>'.format(
-                    reverse("accounts:password-reset")
+                    reverse("password_reset")
                 )
             ),
-            Field("remember_me"),
+
+            Field("remember_me", css_class="form-control form-control-user",),
+
             Submit("sign_in",
                    "Log in",
-                   css_class="btn btn-lg btn-primary btn-block"),
+                   css_class="btn btn-primary btn-user btn-block"),
         )
+"""
 
 
+"""
 class SignupForm(authforms.UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -83,3 +112,4 @@ class SetPasswordForm(authforms.SetPasswordForm):
             Field("new_password2", placeholder="Enter new password (again)"),
             Submit("pass_change", "Change Password", css_class="btn-warning"),
         )
+"""

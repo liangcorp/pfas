@@ -6,23 +6,55 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 
+from .forms import LoginForm
+
 
 def login_user(request):
-    template_name = "accounts/login.html"
+    if not request.user.is_authenticated:
+        login_form = LoginForm()
 
-    username = request.POST.get('username')
-    password = request.POST.get('password')
+        context = {
+                        "login_form": login_form,
+        }
 
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        # Redirect to a success page.
-        redirect('/app/')
+        if request.method == "POST":
+            login_form = LoginForm(data=request.POST)
 
+            if login_form.is_valid():
+                print(login_form.cleaned_data)
+                username = login_form.cleaned_data['username']
+                password = login_form.cleaned_data['password']
+
+                # user = authenticate(request,
+                #                     username=request.POST.get('username'),
+                #                     password=request.POST.get('password'))
+
+                user = authenticate(request,
+                                    username=username,
+                                    password=password)
+
+                # user = authenticate(request, username, password)
+
+                print(username)
+                print(password)
+
+                if user is not None:
+                    login(request, user)
+
+                    # Redirect to a success page.
+                    return redirect('/app/')
+
+                else:
+                    # Return an 'invalid login' error message.
+                    context = {
+                        "login_form": login_form,
+                    }
+                    return render(request, "accounts/login.html", context)
+            else:
+                print(login_form.errors)
+        return render(request, "accounts/login.html", context)
     else:
-        # Return an 'invalid login' error message.
-        context = {}
-        return render(request, template_name, context)
+        return redirect('/app/')
 
 
 @login_required

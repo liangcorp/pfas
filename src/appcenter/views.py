@@ -14,7 +14,7 @@ User = get_user_model()
 #    failed_url = reverse_lazy("home")
 
 
-@login_required
+# @login_required
 # Create your views here.
 def appcenter(request):
     latest_asset_list = Asset.objects.order_by('-asset_type')

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'appcenter',
     'landing',
     'accounts',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
