@@ -6,77 +6,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>{% block title %}{% include "landing/_brandname.html" %} :: Base {% endblock %}</title>
-  <link rel="icon" href="{% static 'parason/img/Fevicon.png' %}" type="image/png">
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <title>{% block title %}{% include "_brandname.html" %} :: Base {% endblock %}</title>
+  <!-- Favicons -->
+  <link href="{% static 'onepage/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'onepage/img/apple-touch-icon.png' %}%" rel="apple-touch-icon">
 
   {% block styles %}
-  <link rel="stylesheet" href="{% static 'parason/vendors/bootstrap/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'parason/vendors/fontawesome/css/all.min.css' %}">
-  <link rel="stylesheet" href="{% static 'parason/vendors/themify-icons/themify-icons.css' %}">
-  <link rel="stylesheet" href="{% static 'parason/vendors/linericon/style.css' %}">
-  <link rel="stylesheet" href="{% static 'parason/vendors/owl-carousel/owl.theme.default.min.css' %}">
-  <link rel="stylesheet" href="{% static 'parason/vendors/owl-carousel/owl.carousel.min.css' %}">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-  <link rel="stylesheet" href="{% static 'parason/css/style.css' %}">
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'onepage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'onepage/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+  <link href="{% static 'onepage/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'onepage/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'onepage/vendor/venobox/venobox.css' %}" rel="stylesheet">
+  <link href="{% static 'onepage/vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link href="{% static 'onepage/vendor/aos/aos.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'onepage/css/style.css' %}" rel="stylesheet">
   {% endblock styles %}
 </head>
 
 
 <body>
-
-  {% block header %}
   <!--================Header Menu Area =================-->
+  {% block navbar %}
+    {% include "_navbar.html" %}
+  {% endblock navbar %}
 
-  {% include "_navbar.html" %}
 
-  <!--================Header Menu Area =================-->
-  {% endblock header %}
-
+  <!--================Content Area =================-->
   {% block content %}
-  <main class="side-main">
-
-    <!--================ Start Clients Logo Area =================-->
-    <section class="clients_logo_area section-padding">
-      <div class="container">
-        <div class="clients_slider owl-carousel">
-          <div class="item">
-            <img src="{% static 'parason/img/clients-logo/c-logo-1.png' %}" alt="">
-          </div>
-          <div class="item">
-            <img src="{% static 'parason/img/clients-logo/c-logo-2.png' %}" alt="">
-          </div>
-          <div class="item">
-            <img src="{% static 'parason/img/clients-logo/c-logo-3.png' %}" alt="">
-          </div>
-          <div class="item">
-            <img src="{% static 'parason/img/clients-logo/c-logo-4.png' %}" alt="">
-          </div>
-          <div class="item">
-            <img src="{% static 'parason/img/clients-logo/c-logo-5.png' %}" alt="">
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--================ End Clients Logo Area =================-->
-  </main>
-
-
-  <!-- ================ start footer Area ================= -->
-  <footer class="footer-area section-gap">
     <div class="container">
-      Footers
+    <h1>Base Page</h1>
     </div>
-  </footer>
-  <!-- ================ End footer Area ================= -->
   {% endblock content %}
 
+
   {% block scripts %}
-  <script src="{% static 'parason/vendors/jquery/jquery-3.2.1.min.js' %}"></script>
-  <script src="{% static 'parason/vendors/bootstrap/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'parason/vendors/owl-carousel/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'parason/js/jquery.ajaxchimp.min.js' %}"></script>
-  <script src="{% static 'parason/js/mail-script.js' %}"></script>
-  <script src="{% static 'parason/js/main.js' %}"></script>
+  <!-- Vendor JS Files -->
+  <script src="{% static 'onepage/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'onepage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'onepage/vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'onepage/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'onepage/vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'onepage/vendor/counterup/counterup.min.js' %}"></script>
+  <script src="{% static 'onepage/vendor/venobox/venobox.min.js' %}"></script>
+  <script src="{% static 'onepage/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'onepage/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'onepage/vendor/aos/aos.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'onepage/js/main.js' %}"></script>
   {% endblock scripts %}
 
 </body>
