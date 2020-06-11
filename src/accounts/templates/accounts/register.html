@@ -1,13 +1,6 @@
-{% extends "base.html" %}
-{% load static %}
-{% block styles %}
-{% include "accounts/_styles.html"%}
-{% endblock styles %}
-{% block title %}Register{% endblock %}
+{% extends "accounts/login.html" %}
 
-{% block header %}
-  {% include "accounts/_header.html"%}
-{% endblock header %}
+{% block title %}:: Register{% endblock %}
 
   {% block content %}
   <body class="bg-gradient-primary">
@@ -72,8 +65,3 @@
 
   </body>
   {% endblock content %}
-
-  {% block scripts %}
-  {% include "accounts/_scripts.html"%}
-  {% endblock scripts %}
-
