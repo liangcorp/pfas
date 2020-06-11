@@ -11,9 +11,11 @@ from .models import Login
 class LoginForm(AuthenticationForm):
 
     username = forms.CharField(widget=forms.TextInput(
-                            attrs={'placeholder': 'Enter Your Email...'}
+                            attrs={'placeholder': 'Enter Your Username...'}
                             ))
-    password = forms.CharField(widget=forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput(
+                            attrs={'placeholder': 'Enter Your Password...'}
+                            ))
 
     class Meta:
         model = Login

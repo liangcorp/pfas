@@ -23,6 +23,7 @@ urlpatterns = [
     path('index', include('landing.urls'), name="index"),
     path('admin/', admin.site.urls),
     path('app/', include('appcenter.urls'), name='app'),
+    path('app/<slug:slug>', include('appcenter.urls'), name='app'),
     path("accounts/", include('accounts.urls'), name="accounts"),
 ]
 

@@ -1,72 +1,31 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 
 from .forms import LoginForm
+from django.contrib.auth.views import LoginView, LogoutView
 
 
-def login_user(request):
-    login_form = LoginForm()
-
-    context = {
-                "login_form": login_form
+class AccountsLoginView(LoginView):
+    template_name = "accounts/login.html"
+    form = LoginForm()
+    redirect_field_name = 'app'
+    next = 'app'
+    extra_context = {
+                        "login_form": form
     }
-
-    if not request.user.is_authenticated:
-
-        if request.method == "POST":
-            login_form = LoginForm(data=request.POST)
-            print(login_form)
-            if login_form.is_valid():
-                print(login_form.cleaned_data)
-                username = login_form.cleaned_data['username']
-                password = login_form.cleaned_data['password']
-
-                # user = authenticate(request,
-                #                     username=request.POST.get('username'),
-                #                     password=request.POST.get('password'))
-
-                user = authenticate(request,
-                                    username=username,
-                                    password=password)
-
-                # user = authenticate(request, username, password)
-
-                print(username)
-                print(password)
-
-                if user is not None:
-                    login(request, user)
-
-                    # Redirect to a success page.
-                    return redirect('/app/')
-
-                else:
-                    # Return an 'invalid login' error message.
-
-                    print("invalid login")
-                    return render(request, "accounts/login.html", context)
-            else:
-                context = {
-                    "login_form": login_form
-                }
-                print(login_form.errors)
-                return render(request, "accounts/login.html", context)
-
-        return render(request, "accounts/login.html", context)
-    else:
-        logout(request)
-        return redirect('landing')
+    # redirect_authenticated_user = True
 
 
-@login_required
-def logout_user(request):
-    logout(request)
-    return redirect('landing')
+class AccountsLogoutView(LogoutView):
+    next_page = 'landing'
+    template_name = "accounts/logout.html"
+
+
+def redirect_to_app(request):
+    return redirect('appcenter')
 
 
 @login_required
