@@ -134,3 +134,4 @@ dmypy.json
 .virtualenv
 Parason Software -doc
 .DS_Store
+*.code-workspace
