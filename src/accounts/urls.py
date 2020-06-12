@@ -5,6 +5,7 @@ from .views import (
                AccountsLoginView,
                AccountsLogoutView
                )
+
 app_name = "accounts"
 
 urlpatterns = [
@@ -12,6 +13,8 @@ urlpatterns = [
 
     path('login/', AccountsLoginView.as_view(), name='login'),
     path('logout/', AccountsLogoutView.as_view(), name='logout'),
+
+    # TODO Switch function views to class views.
     path('password_change/', views.password_change, name='password_change'),
     path('password_change/done/',
          views.password_change_done,
