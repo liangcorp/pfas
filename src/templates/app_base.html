@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'sb-admin-2/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'onepage/img/favicon.png' %}" rel="icon">
     {% block styles %}
     {%endblock styles%}
 </head>
@@ -317,7 +318,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.first_name }} {{ user.last_name }}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.username }}</span>
                 <!--<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">-->
               </a>
               <!-- Dropdown - User Information -->
@@ -352,7 +353,7 @@
         {% block containter_fluid %}
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-          Welcome {{ user.first_name }}. This is a blank page that is going to be replaced.
+          Welcome {{ user.username }}. This is a blank page that is going to be replaced.
         {% endblock containter_fluid %}
         </div>
         <!-- /.container-fluid -->

@@ -1,24 +1,26 @@
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
 from django import forms
 # from crispy_forms.helper import FormHelper
-# from crispy_forms.layout import Layout, Field
-# from django.contrib.auth import forms as authforms
+# from crispy_forms.layout import Layout, Row, Column
 # from django.urls import reverse
 
-from .models import Account
+# from .models import Account
 
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(
-                            attrs={'placeholder': 'Enter Your Username...'}
-                            ))
+        attrs={'placeholder': 'Enter Your Username...'}
+        ))
     password = forms.CharField(widget=forms.PasswordInput(
-                            attrs={'placeholder': 'Enter Your Password...'}
-                            ))
+        attrs={'placeholder': 'Enter Your Password...'}
+        ))
     remember_me = forms.BooleanField(required=False, initial=False)
 
     class Meta:
-        model = Account
+        model = User
         fields = [
             'username',
             'password',
@@ -26,61 +28,40 @@ class LoginForm(AuthenticationForm):
         ]
 
 
-"""
-    email = forms.CharField(widget=forms.TextInput(
-                            attrs={'placeholder': 'Enter Your Email...'}
-                            ))
+class SignupForm(UserCreationForm):
+    username = forms.CharField(
+        min_length=4,
+        max_length=50,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Enter Your Username...'}
+        ))
 
-    password = forms.CharField(widget=forms.PasswordInput())
+    email = forms.EmailField(max_length=50,
+                             required=True,
+                             )
 
-    remember_me = forms.BooleanField(required=False, initial=False)
+    password1 = forms.CharField(
+        min_length=4,
+        label='Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Enter Your Password...'}
+        ))
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        # self.fields["username"].widget.input_type = "email"  # ugly hack
+    password2 = forms.CharField(
+        label='Repeat Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Repeat Your Password...'}
+        ))
 
-        self.helper.layout = Layout(
-            Field("username",
-                  placeholder="Enter Username...",
-                  css_class="form-control form-control-user",
-                  autofocus="",),
-
-            Field("password",
-                  placeholder="Password",
-                  css_class="form-control form-control-user",),
-
-            HTML(
-                '<a href="{}">Forgot Password?</a>'.format(
-                    reverse("password_reset")
-                )
-            ),
-
-            Field("remember_me", css_class="form-control form-control-user",),
-
-            Submit("sign_in",
-                   "Log in",
-                   css_class="btn btn-primary btn-user btn-block"),
-        )
-"""
+    class Meta:
+        model = User
+        fields = ('username',
+                  'email',
+                  'password1',
+                  'password2', )
 
 
 """
-class SignupForm(authforms.UserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.fields["email"].widget.input_type = "email"  # ugly hack
-
-        self.helper.layout = Layout(
-            Field("email", placeholder="Enter Email", autofocus=""),
-            Field("name", placeholder="Enter Full Name"),
-            Field("password1", placeholder="Enter Password"),
-            Field("password2", placeholder="Re-enter Password"),
-            Submit("sign_up", "Sign up", css_class="btn-warning"),
-        )
-
-
 class PasswordChangeForm(authforms.PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

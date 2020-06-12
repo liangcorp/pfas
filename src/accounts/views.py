@@ -6,38 +6,34 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.views import LogoutView
 
-from .forms import LoginForm
+from .forms import LoginForm, SignupForm
 # from django.conf import settings
 
 
+# Use function view to get better control over form.errors and remember_me
 def login_user(request):
     login_form = LoginForm()
 
     context = {
-                "login_form": login_form
+        "login_form": login_form
     }
 
     if not request.user.is_authenticated:
         if request.method == "POST":
             login_form = LoginForm(data=request.POST)
-            print(login_form)
+
             if login_form.is_valid():
-                print(login_form.cleaned_data)
                 username = login_form.cleaned_data['username']
                 password = login_form.cleaned_data['password']
+                remember_me = login_form.cleaned_data.get("remember_me")
 
-                # user = authenticate(request,
-                #                     username=request.POST.get('username'),
-                #                     password=request.POST.get('password'))
+                if not remember_me:
+                    request.session.set_expiry(0)
+                    request.session.modified = True
 
                 user = authenticate(request,
                                     username=username,
                                     password=password)
-
-                # user = authenticate(request, username, password)
-
-                print(username)
-                print(password)
 
                 if user is not None:
                     login(request, user)
@@ -45,22 +41,22 @@ def login_user(request):
                     return redirect('/app/')
                 else:
                     # Return an 'invalid login' error message.
-
-                    print("invalid login")
                     return render(request, "accounts/login.html", context)
             else:
                 context = {
                     "login_form": login_form
                 }
-                print(login_form.errors)
                 return render(request, "accounts/login.html", context)
 
         return render(request, "accounts/login.html", context)
     else:
-        return redirect('landing')
+        return redirect('app:appcenter')
 
 
 """
+# Not used due to log in will cause a page refresh
+# which removes the login error.
+
 class AccountsLoginView(LoginView):
     template_name = "accounts/login.html"
     form_class = LoginForm
@@ -69,7 +65,6 @@ class AccountsLoginView(LoginView):
     extra_context = {
                         "login_form": form
     }
-    # print(form)
 
     def form_valid(self, form):
         redirect = super().form_valid(form)
@@ -80,20 +75,49 @@ class AccountsLoginView(LoginView):
             self.request.session.modified = True
 
         return redirect
-
-    def form_valid(self, form):
-        print(form)
-        # get remember me data from cleaned_data of form
-        remember_me = form.cleaned_data['remember_me']
-        if not remember_me:
-            self.request.session.set_expiry(0)  # if remember me is
-            self.request.session.modified = True
-        return super(AccountsLoginView, self).form_valid(form)
 """
 
 
 class AccountsLogoutView(LogoutView):
     next_page = 'landing:index'
+
+
+def register(request):
+    signup_form = SignupForm()
+
+    context = {
+        "signup_form": signup_form,
+    }
+
+    if request.method == "POST":
+        signup_form = SignupForm(data=request.POST)
+
+        if signup_form.is_valid():
+            signup_form.save()
+
+            request.session.set_expiry(0)
+            request.session.modified = True
+
+            username = signup_form.cleaned_data.get('username')
+            password = signup_form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('/app/')
+        else:
+            context = {
+                "signup_form": signup_form,
+            }
+            return render(request, 'accounts/register.html', context)
+
+    return render(request, 'accounts/register.html', context)
+
+
+"""
+class AccountsUserCreationForm(UserCreationForm):
+    template_name = 'accounts/register.html'
+    form_class = LoginForm
+    form = LoginForm()
+"""
 
 
 def redirect_to_app(request):
@@ -132,8 +156,3 @@ def reset(request):
 
 def reset_done(request):
     pass
-
-
-def register(request):
-    context = {}
-    return render(request, 'accounts/register.html', context)

@@ -13,7 +13,6 @@ urlpatterns = [
     path('login/', views.login_user, name='login'),
     path('logout/', AccountsLogoutView.as_view(), name='logout'),
 
-    # TODO Switch function views to class views.
     path('password_change/', views.password_change, name='password_change'),
     path('password_change/done/',
          views.password_change_done,
@@ -26,7 +25,7 @@ urlpatterns = [
 
     path('reset/', views.reset, name='reset'),
     path('reset/done/', views.reset_done, name='reset_done'),
-    path('register', views.register, name='register'),
+    path('register/', views.register, name='register'),
 
     # TODO remove the redirect in the future
     path('profile/', views.redirect_to_app, name='profile'),

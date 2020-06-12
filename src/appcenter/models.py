@@ -7,12 +7,13 @@ from django.contrib.auth.models import User
  Other app related models reports to it.
 """
 
-
+"""
 class AppCenter(models.Model):
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name="appcenter",
                              null=True)
+"""
 
 
 # Create your models here.
