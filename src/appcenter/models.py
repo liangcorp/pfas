@@ -1,16 +1,18 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
-    user_id = models.CharField(max_length=10)
-    user_full_name = models.CharField(max_length=20)
-    user_email = models.CharField(max_length=20)
-    user_password = models.CharField(max_length=50)
-    user_subscribed = models.BooleanField()
+"""
+ AppCenter model controls all models that relates to the app
+ Other app related models reports to it.
+"""
 
 
-class Type(models.Model):
-    type_name = models.CharField(max_length=10)
+class AppCenter(models.Model):
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             related_name="appcenter",
+                             null=True)
 
 
 # Create your models here.

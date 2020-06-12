@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'appcenter',
     'landing',
     'accounts',
+    'profiles',
     'crispy_forms',
 ]
 

@@ -5,7 +5,7 @@ from django import forms
 # from django.contrib.auth import forms as authforms
 # from django.urls import reverse
 
-from .models import Login
+from .models import Account
 
 
 class LoginForm(AuthenticationForm):
@@ -18,7 +18,7 @@ class LoginForm(AuthenticationForm):
                             ))
 
     class Meta:
-        model = Login
+        model = Account
         fields = [
             'username',
             'password'
