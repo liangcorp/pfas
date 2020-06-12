@@ -21,9 +21,9 @@ def login_user(request):
     if not request.user.is_authenticated:
         if request.method == "POST":
             login_form = LoginForm(data=request.POST)
-
+            print(login_form)
             if login_form.is_valid():
-                username = login_form.cleaned_data['username']
+                email = login_form.cleaned_data['email']
                 password = login_form.cleaned_data['password']
                 remember_me = login_form.cleaned_data.get("remember_me")
 
@@ -32,7 +32,7 @@ def login_user(request):
                     request.session.modified = True
 
                 user = authenticate(request,
-                                    username=username,
+                                    email=email,
                                     password=password)
 
                 if user is not None:
@@ -98,9 +98,9 @@ def register(request):
             request.session.set_expiry(0)
             request.session.modified = True
 
-            username = signup_form.cleaned_data.get('username')
+            email = signup_form.cleaned_data.get('email')
             password = signup_form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
+            user = authenticate(email=email, password=password)
             login(request, user)
             return redirect('/app/')
         else:
