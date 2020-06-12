@@ -11,7 +11,6 @@ from django.contrib.auth.views import LoginView, LogoutView
 class AccountsLoginView(LoginView):
     template_name = "accounts/login.html"
     form = LoginForm()
-    redirect_field_name = 'app'
     next = 'app'
     extra_context = {
                         "login_form": form
@@ -20,12 +19,11 @@ class AccountsLoginView(LoginView):
 
 
 class AccountsLogoutView(LogoutView):
-    next_page = 'landing'
-    template_name = "accounts/logout.html"
+    next_page = 'landing:index'
 
 
 def redirect_to_app(request):
-    return redirect('appcenter')
+    return redirect('app:appcenter')
 
 
 @login_required

@@ -8,7 +8,7 @@ from .views import (
 app_name = "accounts"
 
 urlpatterns = [
-    path('', AccountsLoginView.as_view(), name='accounts'),
+    path('', AccountsLoginView.as_view(), name='login'),
 
     path('login/', AccountsLoginView.as_view(), name='login'),
     path('logout/', AccountsLogoutView.as_view(), name='logout'),
@@ -25,5 +25,7 @@ urlpatterns = [
     path('reset/', views.reset, name='reset'),
     path('reset/done/', views.reset_done, name='reset_done'),
     path('register', views.register, name='register'),
+
+    # TODO remove the redirect in the future
     path('profile/', views.redirect_to_app, name='profile'),
 ]
