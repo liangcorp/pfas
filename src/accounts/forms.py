@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 # from crispy_forms.helper import FormHelper
-# from crispy_forms.layout import Layout, Submit, HTML, Field
+# from crispy_forms.layout import Layout, Field
 # from django.contrib.auth import forms as authforms
 # from django.urls import reverse
 
@@ -9,19 +9,20 @@ from .models import Account
 
 
 class LoginForm(AuthenticationForm):
-
     username = forms.CharField(widget=forms.TextInput(
                             attrs={'placeholder': 'Enter Your Username...'}
                             ))
     password = forms.CharField(widget=forms.PasswordInput(
                             attrs={'placeholder': 'Enter Your Password...'}
                             ))
+    remember_me = forms.BooleanField(required=False, initial=False)
 
     class Meta:
         model = Account
         fields = [
             'username',
-            'password'
+            'password',
+            'remember_me',
         ]
 
 

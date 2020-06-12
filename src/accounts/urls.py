@@ -2,16 +2,15 @@ from django.urls import path
 
 from . import views
 from .views import (
-               AccountsLoginView,
-               AccountsLogoutView
+               AccountsLogoutView,
                )
 
 app_name = "accounts"
 
 urlpatterns = [
-    path('', AccountsLoginView.as_view(), name='login'),
+    path('', views.login_user, name='login'),
 
-    path('login/', AccountsLoginView.as_view(), name='login'),
+    path('login/', views.login_user, name='login'),
     path('logout/', AccountsLogoutView.as_view(), name='logout'),
 
     # TODO Switch function views to class views.

@@ -42,7 +42,8 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Please Login</h1>
                   </div>
-                  <form action='.' method='POST' , class="user"> {% csrf_token %}
+                  <form action='.' method='POST' , class="user">
+                  {% csrf_token %}
 
                     <!-- TODO Modify the Cripy form so li won't show dot -->
                     <div class="form-group">{{ login_form|crispy }}</div>
