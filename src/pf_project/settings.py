@@ -132,3 +132,11 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'appuser.AppUser'
+
+EMAIL_HOST = "localhost"
+EMAIL_HOST_PASSWORD = "7CMpik5J8NV06OJE3TOpsA"
+EMAIL_HOST_USER = "chen.liang.mail@protonmail.com"
+EMAIL_PORT = "1025"
+EMAIL_SUBJECT_PREFIX = "NOREPLY"
+EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 60

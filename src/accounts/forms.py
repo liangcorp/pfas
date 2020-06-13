@@ -1,21 +1,22 @@
 # from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.forms import PasswordResetForm
+
 from django import forms
 from appuser.models import AppUser
 # from crispy_forms.helper import FormHelper
 # from crispy_forms.layout import Layout, Row, Column
-# from django.urls import reverse
-
-# from .models import Account
 
 
 class LoginForm(forms.Form):
+    """
+    Not using AuthenticationForm. This is due to the change from
+    authenticating using username to authenticate using email.
+    """
     email = forms.EmailField(
         max_length=50,
         widget=forms.TextInput(
-            attrs={'placeholder': 'Enter Your Username...'}))
+            attrs={'placeholder': 'Enter Your Email...'}))
 
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'placeholder': 'Enter Your Password...'}))
@@ -36,7 +37,7 @@ class SignupForm(UserCreationForm):
         max_length=50,
         required=True,
         widget=forms.TextInput(
-            attrs={'placeholder': 'Enter Your Username...'}))
+            attrs={'placeholder': 'Enter Your Email...'}))
 
     password1 = forms.CharField(
         min_length=4,
@@ -83,8 +84,17 @@ class CustomPasswordChangeForm(PasswordChangeForm):
                   'new_password2')
 
 
-"""
-class PasswordResetForm(PasswordResetForm):
+class CustomPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Enter Your Email...'}))
+
+    class Meta:
+        model = AppUser
+        fields = ('email')
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -93,8 +103,9 @@ class PasswordResetForm(PasswordResetForm):
             Field("email", placeholder="Enter email", autofocus=""),
             Submit("pass_reset", "Reset Password", css_class="btn-warning"),
         )
+    """
 
-"""
+
 """
 class SetPasswordForm(authforms.SetPasswordForm):
     def __init__(self, *args, **kwargs):

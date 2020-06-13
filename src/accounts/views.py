@@ -5,8 +5,13 @@ from django.contrib.auth import login, authenticate
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView, PasswordResetView
+from django.contrib.auth.views import PasswordResetDoneView
+from django.contrib.auth.views import PasswordResetConfirmView
 
-from .forms import LoginForm, SignupForm, CustomPasswordChangeForm
+from .forms import LoginForm, SignupForm
+from .forms import CustomPasswordChangeForm, CustomPasswordResetForm
+
+from django.core.mail import send_mail
 
 User = get_user_model()
 
@@ -57,7 +62,7 @@ def login_user(request):
         return redirect('app:appcenter')
 
 
-class AccountsLogoutView(LogoutView):
+class CustomLogoutView(LogoutView):
     next_page = 'landing:index'
 
 
@@ -91,8 +96,22 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 
-class AccountsPasswordResetView(PasswordResetView):
-    template_name = "forgot-password.html"
+class CustomPasswordResetView(PasswordResetView):
+    template_name = "accounts/forgot-password.html"
+    form_class = CustomPasswordResetForm
+    form = CustomPasswordResetForm()
+    from_email = "noreply@liangcorp.com"
+    subject_template_name = "accounts/password_reset_subject.txt"
+    email_template_name = "accounts/password_reset_email.html"
+    success_url = "/accounts/password_reset/done/"
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = "accounts/password_reset_done.html"
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "accounts/password_reset_confirm.html"
 
 
 # Reset password with function
@@ -101,8 +120,9 @@ def password_reset(request):
     return render(request, 'accounts/forgot-password.html', context)
 
 
-def password_reset_done(request):
-    pass
+def password_reset_confirm(request):
+    context = {}
+    return render(request, 'accounts/password_reset_confirm.html', context)
 
 
 def reset(request):
