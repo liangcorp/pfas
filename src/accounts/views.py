@@ -7,11 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView, PasswordResetView
 from django.contrib.auth.views import PasswordResetDoneView
 from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.views import PasswordResetCompleteView
 
 from .forms import LoginForm, SignupForm
 from .forms import CustomPasswordChangeForm, CustomPasswordResetForm
-
-from django.core.mail import send_mail
+from .forms import CustomSetPasswordForm
 
 User = get_user_model()
 
@@ -96,6 +96,7 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 
+# Create page that allow users to enter their email address
 class CustomPasswordResetView(PasswordResetView):
     template_name = "accounts/forgot-password.html"
     form_class = CustomPasswordResetForm
@@ -106,23 +107,21 @@ class CustomPasswordResetView(PasswordResetView):
     success_url = "/accounts/password_reset/done/"
 
 
+# Confirm that email had been sent
 class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = "accounts/password_reset_done.html"
 
 
+# Provide page for users to reset their password
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "accounts/password_reset_confirm.html"
+    form_class = CustomSetPasswordForm
+    # form = CustomSetPasswordForm()
+    success_url = "/accounts/password_reset_complete/"
 
 
-# Reset password with function
-def password_reset(request):
-    context = {}
-    return render(request, 'accounts/forgot-password.html', context)
-
-
-def password_reset_confirm(request):
-    context = {}
-    return render(request, 'accounts/password_reset_confirm.html', context)
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = "accounts/password_reset_complete.html"
 
 
 def reset(request):

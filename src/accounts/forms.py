@@ -1,11 +1,13 @@
 # from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from django.contrib.auth.forms import PasswordResetForm
-
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django import forms
 from appuser.models import AppUser
 # from crispy_forms.helper import FormHelper
 # from crispy_forms.layout import Layout, Row, Column
+# from django.urls import reverse
+
+# from .models import Account
 
 
 class LoginForm(forms.Form):
@@ -94,6 +96,24 @@ class CustomPasswordResetForm(PasswordResetForm):
     class Meta:
         model = AppUser
         fields = ('email')
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label='New Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Enter Your New Password...'}))
+
+    new_password2 = forms.CharField(
+        label='Repeat New Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Repeat Your New Password...'}))
+
+    class Meta:
+        model = AppUser
+        fields = ('new_password1',
+                  'new_password2')
+
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
