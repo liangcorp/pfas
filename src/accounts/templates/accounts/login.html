@@ -20,7 +20,7 @@
   </style>
   <link href="{% static 'onepage/img/favicon.png' %}" rel="icon"/>
 
-  {% include "registration/_styles.html" %}
+  {% include "accounts/_styles.html" %}
   {% block styles %}
   {% endblock styles %}
   <title>{% include "_brandname.html" %} {% block title %} :: Login {% endblock %}</title>
@@ -29,7 +29,7 @@
 <body class="bg-gradient-primary">
 
   {% block navbar %}
-  {% include "registration/_navbar.html"%}
+  {% include "accounts/_navbar.html"%}
   {% endblock navbar %}
 
   <div class="container">
@@ -47,7 +47,7 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Please Login</h1>
                   </div>
-                  <form action="{% url 'registration:login' %}" method='POST' class="user">
+                  <form action="{% url 'accounts:login' %}" method='POST' class="user">
                   {% csrf_token %}
 
                     <div class="form-group">{{ login_form|crispy }}</div>
@@ -64,10 +64,10 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="{% url 'registration:password_reset' %}">Forgot Password?</a>
+                    <a class="small" href="{% url 'accounts:password_reset' %}">Forgot Password?</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="{% url 'registration:register' %}">Create an Account!</a>
+                    <a class="small" href="{% url 'accounts:register' %}">Create an Account!</a>
                   </div>
                 </div>
               </div>
@@ -89,5 +89,5 @@
     </div>
 
   </div>
-  {%include "registration/_scripts.html"%}
+  {%include "accounts/_scripts.html"%}
 </body>

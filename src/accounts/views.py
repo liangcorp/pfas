@@ -45,19 +45,19 @@ def login_user(request):
                     return redirect('/app/')
                 else:
                     # Return an 'invalid login' error message.
-                    return render(request, "registration/login.html", context)
+                    return render(request, "accounts/login.html", context)
             else:
                 context = {
                     "login_form": login_form
                 }
-                return render(request, "registration/login.html", context)
+                return render(request, "accounts/login.html", context)
 
-        return render(request, "registration/login.html", context)
+        return render(request, "accounts/login.html", context)
     else:
         return redirect('app:appcenter')
 
 
-class RegistrationLogoutView(LogoutView):
+class AccountsLogoutView(LogoutView):
     next_page = 'landing:index'
 
 
@@ -86,19 +86,19 @@ def register(request):
             context = {
                 "signup_form": signup_form,
             }
-            return render(request, 'registration/register.html', context)
+            return render(request, 'accounts/register.html', context)
 
-    return render(request, 'registration/register.html', context)
+    return render(request, 'accounts/register.html', context)
 
 
-class RegistrationPasswordResetView(PasswordResetView):
+class AccountsPasswordResetView(PasswordResetView):
     template_name = "forgot-password.html"
 
 
 # Reset password with function
 def password_reset(request):
     context = {}
-    return render(request, 'registration/forgot-password.html', context)
+    return render(request, 'accounts/forgot-password.html', context)
 
 
 def password_reset_done(request):
@@ -130,9 +130,9 @@ def password_change(request):
             context = {
                 "password_change_form": password_change_form
             }
-        return render(request, "registration/change-password.html", context)
+        return render(request, "accounts/change-password.html", context)
 
-    return render(request, "registration/change-password.html", context)
+    return render(request, "accounts/change-password.html", context)
 
 
 @login_required
@@ -144,4 +144,4 @@ def password_change_done(request):
     }
 
     if request.method == 'POST':
-        return render(request, "registration/change-password.html", context)
+        return render(request, "accounts/change-password.html", context)
