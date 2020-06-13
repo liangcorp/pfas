@@ -1,20 +1,21 @@
 from django.shortcuts import render, redirect
 
-from django.contrib.auth import update_session_auth_hash, login, authenticate
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash, get_user_model
+from django.contrib.auth import login, authenticate
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView, PasswordResetView
 
-from django.contrib.auth.views import LogoutView
-from django.contrib.auth import get_user_model
-
-from .forms import LoginForm, SignupForm
-# from django.conf import settings
+from .forms import LoginForm, SignupForm, CustomPasswordChangeForm
 
 User = get_user_model()
 
 
-# Use function view to get better control over form.errors and remember_me
 def login_user(request):
+    """
+        Use function view to get better control over form.errors and
+    remember_me checkbox
+    """
     login_form = LoginForm()
 
     context = {
@@ -44,44 +45,19 @@ def login_user(request):
                     return redirect('/app/')
                 else:
                     # Return an 'invalid login' error message.
-                    return render(request, "accounts/login.html", context)
+                    return render(request, "registration/login.html", context)
             else:
                 context = {
                     "login_form": login_form
                 }
-                return render(request, "accounts/login.html", context)
+                return render(request, "registration/login.html", context)
 
-        return render(request, "accounts/login.html", context)
+        return render(request, "registration/login.html", context)
     else:
         return redirect('app:appcenter')
 
 
-"""
-# Not used due to log in will cause a page refresh
-# which removes the login error.
-
-class AccountsLoginView(LoginView):
-    template_name = "accounts/login.html"
-    form_class = LoginForm
-    form = LoginForm()
-    next = 'app:appcenter'
-    extra_context = {
-                        "login_form": form
-    }
-
-    def form_valid(self, form):
-        redirect = super().form_valid(form)
-        remember_me = form.cleaned_data.get("remember_me")
-        print(remember_me)
-        if not remember_me:
-            self.request.session.set_expiry(0)
-            self.request.session.modified = True
-
-        return redirect
-"""
-
-
-class AccountsLogoutView(LogoutView):
+class RegistrationLogoutView(LogoutView):
     next_page = 'landing:index'
 
 
@@ -110,38 +86,19 @@ def register(request):
             context = {
                 "signup_form": signup_form,
             }
-            return render(request, 'accounts/register.html', context)
+            return render(request, 'registration/register.html', context)
 
-    return render(request, 'accounts/register.html', context)
-
-
-"""
-class AccountsUserCreationForm(UserCreationForm):
-    template_name = 'accounts/register.html'
-    form_class = LoginForm
-    form = LoginForm()
-"""
+    return render(request, 'registration/register.html', context)
 
 
-@login_required
-def password_change(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(user=request.user, data=request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-        else:
-            ...
+class RegistrationPasswordResetView(PasswordResetView):
+    template_name = "forgot-password.html"
 
 
-@login_required
-def password_change_done(request):
-    pass
-
-
+# Reset password with function
 def password_reset(request):
     context = {}
-    return render(request, 'accounts/forgot-password.html', context)
+    return render(request, 'registration/forgot-password.html', context)
 
 
 def password_reset_done(request):
@@ -154,3 +111,37 @@ def reset(request):
 
 def reset_done(request):
     pass
+
+
+@login_required
+def password_change(request):
+    password_change_form = CustomPasswordChangeForm()
+
+    context = {
+        "password_change_form": password_change_form
+    }
+
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+        else:
+            context = {
+                "password_change_form": password_change_form
+            }
+        return render(request, "registration/change-password.html", context)
+
+    return render(request, "registration/change-password.html", context)
+
+
+@login_required
+def password_change_done(request):
+    password_change_form = CustomPasswordChangeForm()
+
+    context = {
+        "password_change_form": password_change_form
+    }
+
+    if request.method == 'POST':
+        return render(request, "registration/change-password.html", context)

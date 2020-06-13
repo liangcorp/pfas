@@ -21,7 +21,7 @@ urlpatterns = [
     path('', include('landing.urls'), name="landing:index"),
     path('admin/', admin.site.urls),
     path('app/', include('appcenter.urls'), name='app:appcenter'),
-    path("accounts/", include('accounts.urls'), name="accounts:login"),
+    path("registration/", include('registration.urls'), name="registration:login"),
     path("profile/", include('profiles.urls'), name="profile:profile"),
 ]
 

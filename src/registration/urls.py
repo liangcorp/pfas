@@ -2,23 +2,27 @@ from django.urls import path
 
 from . import views
 from .views import (
-               AccountsLogoutView,
+               RegistrationLogoutView,
+               RegistrationPasswordResetView
                )
 
-app_name = "accounts"
+app_name = "registration"
 
 urlpatterns = [
     path('', views.login_user, name='login'),
 
     path('login/', views.login_user, name='login'),
-    path('logout/', AccountsLogoutView.as_view(), name='logout'),
+    path('logout/', RegistrationLogoutView.as_view(), name='logout'),
 
     path('password_change/', views.password_change, name='password_change'),
     path('password_change/done/',
          views.password_change_done,
          name='password_change_done'),
 
-    path('password_reset/', views.password_reset, name='password_reset'),
+    path('password_reset/',
+         RegistrationPasswordResetView.as_view(),
+         name='password_reset'),
+
     path('password_reset/done/',
          views.password_reset_done,
          name='password_reset_done'),

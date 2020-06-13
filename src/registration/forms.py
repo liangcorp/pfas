@@ -1,6 +1,7 @@
-from django.contrib.auth.forms import AuthenticationForm
+# from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
-
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordResetForm
 from django import forms
 from appuser.models import AppUser
 # from crispy_forms.helper import FormHelper
@@ -11,14 +12,13 @@ from appuser.models import AppUser
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(max_length=50,
-                             widget=forms.TextInput(
-                                attrs={'placeholder': 'Enter Your Username...'}
-                                ))
+    email = forms.EmailField(
+        max_length=50,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Enter Your Username...'}))
 
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': 'Enter Your Password...'}
-        ))
+        attrs={'placeholder': 'Enter Your Password...'}))
 
     remember_me = forms.BooleanField(required=False, initial=False)
 
@@ -32,11 +32,11 @@ class LoginForm(forms.Form):
 
 
 class SignupForm(UserCreationForm):
-    email = forms.EmailField(max_length=50,
-                             required=True,
-                             widget=forms.TextInput(
-                                attrs={'placeholder': 'Enter Your Username...'}
-                                ))
+    email = forms.EmailField(
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(
+            attrs={'placeholder': 'Enter Your Username...'}))
 
     password1 = forms.CharField(
         min_length=4,
@@ -58,23 +58,33 @@ class SignupForm(UserCreationForm):
                   'password2', )
 
 
+# PasswordChangeForm
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label='Current Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Enter Your Current Password...',
+                   'autofocus': 'autofocus'}))
+
+    new_password1 = forms.CharField(
+        label='New Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Enter Your New Password...'}))
+
+    new_password2 = forms.CharField(
+        label='Repeat New Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Repeat Your New Password...'}))
+
+    class Meta:
+        model = AppUser
+        fields = ('old_password',
+                  'new_password1',
+                  'new_password2')
+
+
 """
-class PasswordChangeForm(authforms.PasswordChangeForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-
-        self.helper.layout = Layout(
-            Field("old_password",
-                  placeholder="Enter old password",
-                  autofocus=""),
-            Field("new_password1", placeholder="Enter new password"),
-            Field("new_password2", placeholder="Enter new password (again)"),
-            Submit("pass_change", "Change Password", css_class="btn-warning"),
-        )
-
-
-class PasswordResetForm(authforms.FriendlyPasswordResetForm):
+class PasswordResetForm(PasswordResetForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -84,7 +94,8 @@ class PasswordResetForm(authforms.FriendlyPasswordResetForm):
             Submit("pass_reset", "Reset Password", css_class="btn-warning"),
         )
 
-
+"""
+"""
 class SetPasswordForm(authforms.SetPasswordForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
