@@ -27,6 +27,4 @@ urlpatterns = [
     path('reset/done/', views.reset_done, name='reset_done'),
     path('register/', views.register, name='register'),
 
-    # TODO remove the redirect in the future
-    path('profile/', views.redirect_to_app, name='profile'),
 ]

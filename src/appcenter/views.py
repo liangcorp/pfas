@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 
 from assets.models import Asset
+
 User = get_user_model()
 
 # class CheckAuthApp(bracesviews.AnonymousRequiredMixin, authviews.LoginView):

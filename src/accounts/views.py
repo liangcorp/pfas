@@ -5,9 +5,12 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth import get_user_model
 
 from .forms import LoginForm, SignupForm
 # from django.conf import settings
+
+User = get_user_model()
 
 
 # Use function view to get better control over form.errors and remember_me
@@ -118,11 +121,6 @@ class AccountsUserCreationForm(UserCreationForm):
     form_class = LoginForm
     form = LoginForm()
 """
-
-
-def redirect_to_app(request):
-    # request.session.set_expiry(request.GET.get('remember_me'))
-    return redirect('app:appcenter')
 
 
 @login_required
