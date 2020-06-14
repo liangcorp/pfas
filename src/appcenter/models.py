@@ -1,10 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
 
-
-"""
- AppCenter model controls all models that relates to the app
- Other app related models reports to it.
+"""AppCenter model controls all models that relates to the app
+Other app related models reports to it.
 """
 
 """

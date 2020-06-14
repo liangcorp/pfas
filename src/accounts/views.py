@@ -1,25 +1,35 @@
 from django.shortcuts import render, redirect
 
-from django.contrib.auth import update_session_auth_hash, get_user_model
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import (
+    update_session_auth_hash,
+    get_user_model,
+    login,
+    authenticate
+)
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LogoutView, PasswordResetView
-from django.contrib.auth.views import PasswordResetDoneView
-from django.contrib.auth.views import PasswordResetConfirmView
-from django.contrib.auth.views import PasswordResetCompleteView
+from django.contrib.auth.views import (
+    LogoutView,
+    PasswordResetView,
+    PasswordResetDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView
+)
 
-from .forms import LoginForm, SignupForm
-from .forms import CustomPasswordChangeForm, CustomPasswordResetForm
-from .forms import CustomSetPasswordForm
+from .forms import (
+    LoginForm,
+    SignupForm,
+    CustomPasswordChangeForm,
+    CustomPasswordResetForm,
+    CustomSetPasswordForm
+)
 
 User = get_user_model()
 
 
 def login_user(request):
-    """
-        Use function view to get better control over form.errors and
-    remember_me checkbox
+    """Use function view to get better control over form.errors and
+    remember_me checkbox.
     """
     login_form = LoginForm()
 
@@ -30,7 +40,6 @@ def login_user(request):
     if not request.user.is_authenticated:
         if request.method == "POST":
             login_form = LoginForm(data=request.POST)
-            print(login_form)
             if login_form.is_valid():
                 email = login_form.cleaned_data['email']
                 password = login_form.cleaned_data['password']
@@ -120,16 +129,9 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     success_url = "/accounts/password_reset_complete/"
 
 
+# Confirm the password had changed
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = "accounts/password_reset_complete.html"
-
-
-def reset(request):
-    pass
-
-
-def reset_done(request):
-    pass
 
 
 @login_required

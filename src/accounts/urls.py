@@ -1,5 +1,4 @@
 from django.urls import path
-# from django.conf.urls import include, url
 
 from . import views
 from .views import (
@@ -16,16 +15,27 @@ urlpatterns = [
     path('', views.login_user, name='login'),
 
     path('login/', views.login_user, name='login'),
+
     path('logout/', CustomLogoutView.as_view(), name='logout'),
 
     path('password_change/', views.password_change, name='password_change'),
-    path('password_reset/', CustomPasswordResetView.as_view(), name='password_reset'),
-    path('password_reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
-    path(r'password_reset_confirm/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path(r'password_reset_complete/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
-    path('reset/', views.reset, name='reset'),
-    path('reset/done/', views.reset_done, name='reset_done'),
+    path('password_reset/',
+         CustomPasswordResetView.as_view(),
+         name='password_reset'),
+
+    path('password_reset/done/',
+         CustomPasswordResetDoneView.as_view(),
+         name='password_reset_done'),
+
+    path(r'password_reset_confirm/<uidb64>/<token>/',
+         CustomPasswordResetConfirmView.as_view(),
+         name='password_reset_confirm'),
+
+    path(r'password_reset_complete/',
+         CustomPasswordResetCompleteView.as_view(),
+         name='password_reset_complete'),
+
     path('register/', views.register, name='register'),
 
 ]

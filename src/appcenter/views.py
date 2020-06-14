@@ -10,9 +10,6 @@ from assets.models import Asset
 
 User = get_user_model()
 
-# class CheckAuthApp(bracesviews.AnonymousRequiredMixin, authviews.LoginView):
-#    failed_url = reverse_lazy("home")
-
 
 @login_required
 # Create your views here.

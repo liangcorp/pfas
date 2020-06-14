@@ -21,8 +21,10 @@ class Asset(models.Model):
 
     asset_initial_balance = models.DecimalField(max_digits=19,
                                                 decimal_places=2)
+
     asset_current_balance = models.DecimalField(max_digits=19,
                                                 decimal_places=2)
+
     asset_open_date = models.DateField('opening date')
 
     asset_type = models.CharField(
