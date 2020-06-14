@@ -1,5 +1,5 @@
-# from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import (
+    AuthenticationForm,
     UserCreationForm,
     PasswordChangeForm,
     PasswordResetForm,
@@ -8,12 +8,11 @@ from django import forms
 from appuser.models import AppUser
 
 
-class LoginForm(forms.Form):
+class LoginForm(AuthenticationForm):
+    """AuthenticationForm is hacked to using email as label.
+    username is set to take email as input.
     """
-    Not using AuthenticationForm. This is due to the change from
-    authenticating using username to authenticate using email.
-    """
-    email = forms.EmailField(
+    username = forms.EmailField(
         max_length=50,
         widget=forms.TextInput(
             attrs={
@@ -27,7 +26,7 @@ class LoginForm(forms.Form):
     class Meta:
         model = AppUser
         fields = [
-            'email',
+            'username',
             'password',
             'remember_me',
         ]

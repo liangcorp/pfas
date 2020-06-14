@@ -31,44 +31,43 @@ def login_user(request):
     """Use function view to get better control over form.errors and
     remember_me checkbox.
     """
-    login_form = LoginForm()
-
-    context = {
-        "login_form": login_form
-    }
-
     if not request.user.is_authenticated:
         if request.method == "POST":
             login_form = LoginForm(data=request.POST)
+            print(login_form)
             if login_form.is_valid():
-                email = login_form.cleaned_data['email']
+                email = login_form.cleaned_data['username']
                 password = login_form.cleaned_data['password']
                 remember_me = login_form.cleaned_data.get("remember_me")
-
-                if not remember_me:
-                    request.session.set_expiry(0)
-                    request.session.modified = True
 
                 user = authenticate(request,
                                     email=email,
                                     password=password)
 
+                if not remember_me:
+                    request.session.set_expiry(0)
+                    request.session.modified = True
+
                 if user is not None:
                     login(request, user)
                     # Redirect to a success page.
                     return redirect('/app/')
-                else:
-                    # Return an 'invalid login' error message.
-                    return render(request, "accounts/login.html", context)
             else:
+
                 context = {
                     "login_form": login_form
                 }
                 return render(request, "accounts/login.html", context)
-
-        return render(request, "accounts/login.html", context)
     else:
         return redirect('app:appcenter')
+
+    login_form = LoginForm()
+    print(login_form)
+    context = {
+        "login_form": login_form
+    }
+
+    return render(request, "accounts/login.html", context)
 
 
 class CustomLogoutView(LogoutView):

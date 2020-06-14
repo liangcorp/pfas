@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+DATABASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'pf_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(DATABASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -138,11 +138,3 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'appuser.AppUser'
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_HOST = "localhost"
-# EMAIL_HOST_PASSWORD = "7CMpik5J8NV06OJE3TOpsA"
-# EMAIL_HOST_USER = "chen.liang.mail@protonmail.com"
-# EMAIL_PORT = "1025"
-# EMAIL_SUBJECT_PREFIX = "NOREPLY"
-# EMAIL_USE_TLS = True
