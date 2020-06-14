@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 
 from django.contrib.auth import (
     update_session_auth_hash,
-    get_user_model,
     login,
     logout,
     authenticate
@@ -11,7 +10,6 @@ from django.contrib.auth import (
 from django.contrib.auth.decorators import login_required
 
 from .forms import (
-    SignupForm,
     CustomPasswordChangeForm
 )
 
@@ -25,8 +23,6 @@ from allauth.account.views import (
     PasswordChangeView,
     PasswordResetFromKeyView,
 )
-
-User = get_user_model()
 
 
 def login_user(request):
@@ -74,8 +70,6 @@ def logout_user(request):
 
 class CutomeSignupView(SignupView):
     template_name = 'accounts/signup.html'
-    # success_url = 'accounts:account_email_verification_sent'
-    form_class = SignupForm
 
 
 class CustomEmailView(EmailView):
