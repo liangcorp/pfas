@@ -31,8 +31,8 @@ class Asset(models.Model):
         default=BANK,
     )
 
-    def get_asset_name(this):
-        return this.asset_name
+    def get_asset_name(self):
+        return self.asset_name
 
-    def get_asset_current_balance(this):
-        return this.asset_current_balance
+    def get_asset_current_balance(self):
+        return self.asset_current_balance

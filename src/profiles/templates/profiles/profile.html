@@ -2,5 +2,7 @@
 
 {% block containter_fluid %}
 <h1>Profile</h1>
-Welcome {{ user.email }}
+Welcome {{ user.email }}<br>
+Your full name is {{profile.first_name}} {{profile.last_name}}<br>
+Your birthday is {{ profile.birthday}}
 {% endblock containter_fluid %}
