@@ -65,10 +65,12 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('app:appcenter')
+    return redirect('accounts:login')
 
 
 class CutomeSignupView(SignupView):
+    """Use custome template for the signup form.
+    """
     template_name = 'accounts/signup.html'
 
 
@@ -77,10 +79,17 @@ class CustomEmailView(EmailView):
 
 
 class CustomConfirmEmailView(ConfirmEmailView):
+    """View for verifying new user account.
+    This will show after the new user click the verification
+    link in their email.
+    """
     template_name = "accounts/email_confirm.html"
 
 
 def confirm_email_sent(request):
+    """Notifying the new user that an account verification email
+    had been sent to their email addresses.
+    """
     context = {}
     return render(request, "accounts/verification_email_sent.html", context)
 
@@ -89,16 +98,16 @@ class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = "accounts/password_reset_done.html"
 
 
-class CustomPasswordChangeView(PasswordChangeView):
-    template_name = "change-password.html"
-
-
 class CustomPasswordResetView(PasswordResetView):
-    template_name = 'password_reset_confirm.html'
+    template_name = 'accounts/password_reset_confirm.html'
 
 
 class CustomPasswordResetFromKeyView(PasswordResetFromKeyView):
     template_name = "accounts/password_reset_from_key.html"
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = "accounts/change-password.html"
 
 
 """
