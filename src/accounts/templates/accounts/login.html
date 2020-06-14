@@ -48,7 +48,7 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Please Login</h1>
                   </div>
-                  <form action="{% url 'accounts:login' %}" method='POST' class="user">
+                  <form action="{% url 'accounts:account_login' %}" method='POST' class="user">
                   {% csrf_token %}
 
                     <div class="form-group">{{ login_form|crispy }}</div>
@@ -65,10 +65,10 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="{% url 'accounts:password_reset' %}">Forgot Password?</a>
+                    <a class="small" href="{% url 'accounts:account_reset_password' %}">Forgot Password?</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="{% url 'accounts:register' %}">Create an Account!</a>
+                    <a class="small" href="{% url 'accounts:account_signup' %}">Create an Account!</a>
                   </div>
                 </div>
               </div>

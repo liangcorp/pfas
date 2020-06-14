@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'profiles',
     'crispy_forms',
-    'appuser',
+    # appuser',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +137,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-AUTH_USER_MODEL = 'appuser.AppUser'
+# AUTH_USER_MODEL = 'appuser.AppUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST = "localhost"

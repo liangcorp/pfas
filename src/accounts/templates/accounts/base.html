@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load crispy_forms_tags %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta content="Web based personal finance software" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Django's form.errors will use <ul>
+  This CSS style removes ident and button of the <li> elements-->
+  <style type="text/css">
+    ul {
+      padding: 0;
+      list-style-type: none;
+    }
+  </style>
+  <link href="{% static 'onepage/img/favicon.png' %}" rel="icon"/>
+
+  {% include "accounts/_styles.html" %}
+  {% block styles %}
+  {% endblock styles %}
+  <title>{% include "_brandname.html" %} {% block title %} :: Base {% endblock %}</title>
+</head>
+
+<body class="bg-gradient-primary">
+
+  {% block navbar %}
+  {% include "accounts/_navbar.html"%}
+  {% endblock navbar %}
+
+  <div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        {% block content %}
+        Base block.
+        {% endblock content %}
+      </div>
+
+      <!-- Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto text-white">
+            <span>Copyright &copy; Webbased Accounting Software 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+    </div>
+
+  </div>
+  {%include "accounts/_scripts.html"%}
+</body>

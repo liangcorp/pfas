@@ -1,6 +1,6 @@
-{% extends "accounts/login.html" %}
+{% extends "accounts/base.html" %}
 
-{% block title %}::Password Reset Email Sent{% endblock %}
+{% block title %} :: Verification Email Sent{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -8,12 +8,12 @@
   <div class="card-body p-0">
     <!-- Nested Row within Card Body -->
     <div class="row">
-      <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+      <div class="col-lg-6 d-none d-lg-block bg-register-image"></div>
       <div class="col-lg-6">
         <div class="p-5">
           <div class="text-center">
-            <h1 class="h4 text-gray-900 mb-2">Email had been sent.</h1>
-            <p class="mb-4">An email with a password reset link had been sent to your email address</p>
+            <h1 class="h4 text-gray-900 mb-2">Verification Email Sent</h1>
+            <p class="mb-4">We've sent you a verification email.</p>
           </div>
 
           <div class="text-center">

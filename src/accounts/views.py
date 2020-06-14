@@ -4,24 +4,26 @@ from django.contrib.auth import (
     update_session_auth_hash,
     get_user_model,
     login,
+    logout,
     authenticate
 )
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import (
-    LogoutView,
-    PasswordResetView,
-    PasswordResetDoneView,
-    PasswordResetConfirmView,
-    PasswordResetCompleteView
-)
 
 from .forms import (
-    LoginForm,
     SignupForm,
-    CustomPasswordChangeForm,
-    CustomPasswordResetForm,
-    CustomSetPasswordForm
+    CustomPasswordChangeForm
+)
+
+from allauth.account.forms import LoginForm
+from allauth.account.views import (
+    SignupView,
+    EmailView,
+    ConfirmEmailView,
+    PasswordResetView,
+    PasswordResetDoneView,
+    PasswordChangeView,
+    PasswordResetFromKeyView,
 )
 
 User = get_user_model()
@@ -38,12 +40,12 @@ def login_user(request):
             login_form = LoginForm(data=request.POST)
 
             if login_form.is_valid():
-                email = login_form.cleaned_data['username']
+                username = login_form.cleaned_data['login']
                 password = login_form.cleaned_data['password']
                 remember_me = login_form.cleaned_data.get("remember_me")
 
                 user = authenticate(request,
-                                    email=email,
+                                    username=username,
                                     password=password)
 
                 if not remember_me:
@@ -65,40 +67,47 @@ def login_user(request):
     return render(request, "accounts/login.html", context)
 
 
-class CustomLogoutView(LogoutView):
-    next_page = 'app:appcenter'
+def logout_user(request):
+    logout(request)
+    return redirect('app:appcenter')
 
 
-def register(request):
-    signup_form = SignupForm()
-
-    context = {
-        "signup_form": signup_form,
-    }
-
-    if request.method == "POST":
-        signup_form = SignupForm(data=request.POST)
-
-        if signup_form.is_valid():
-            signup_form.save()
-
-            request.session.set_expiry(0)
-            request.session.modified = True
-
-            email = signup_form.cleaned_data.get('email')
-            password = signup_form.cleaned_data.get('password1')
-            user = authenticate(email=email, password=password)
-            login(request, user)
-            return redirect('/app/')
-        else:
-            context = {
-                "signup_form": signup_form,
-            }
-            return render(request, 'accounts/register.html', context)
-
-    return render(request, 'accounts/register.html', context)
+class CutomeSignupView(SignupView):
+    template_name = 'accounts/signup.html'
+    # success_url = 'accounts:account_email_verification_sent'
+    form_class = SignupForm
 
 
+class CustomEmailView(EmailView):
+    template_name = 'accounts/email.html'
+
+
+class CustomConfirmEmailView(ConfirmEmailView):
+    template_name = "accounts/email_confirm.html"
+
+
+def confirm_email_sent(request):
+    context = {}
+    return render(request, "accounts/verification_email_sent.html", context)
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = "accounts/password_reset_done.html"
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = "change-password.html"
+
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'password_reset_confirm.html'
+
+
+class CustomPasswordResetFromKeyView(PasswordResetFromKeyView):
+    template_name = "accounts/password_reset_from_key.html"
+
+
+"""
 # Create page that allow users to enter their email address
 class CustomPasswordResetView(PasswordResetView):
     template_name = "accounts/forgot-password.html"
@@ -113,19 +122,7 @@ class CustomPasswordResetView(PasswordResetView):
 # Confirm that email had been sent
 class CustomPasswordResetDoneView(PasswordResetDoneView):
     template_name = "accounts/password_reset_done.html"
-
-
-# Provide page for users to reset their password
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = "accounts/password_reset_confirm.html"
-    form_class = CustomSetPasswordForm
-    # form = CustomSetPasswordForm()
-    success_url = "/accounts/password_reset_complete/"
-
-
-# Confirm the password had changed
-class CustomPasswordResetCompleteView(PasswordResetCompleteView):
-    template_name = "accounts/password_reset_complete.html"
+"""
 
 
 @login_required

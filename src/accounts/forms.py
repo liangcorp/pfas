@@ -1,22 +1,21 @@
 from django.contrib.auth.forms import (
-    AuthenticationForm,
+    # AuthenticationForm,
     UserCreationForm,
     PasswordChangeForm,
     PasswordResetForm,
     SetPasswordForm)
+from allauth.account.forms import LoginForm
 from django import forms
-from appuser.models import AppUser
+from django.contrib.auth.models import User
 
 
-class LoginForm(AuthenticationForm):
+class CustomLoginForm(LoginForm):
     """AuthenticationForm is hacked to using email as label.
     username is set to take email as input.
     """
-    username = forms.EmailField(
-        max_length=50,
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'Enter Your Email...'}))
+
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Enter Your Username...'}))
 
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'placeholder': 'Enter Your Password...'}))
@@ -24,7 +23,7 @@ class LoginForm(AuthenticationForm):
     remember_me = forms.BooleanField(required=False, initial=False)
 
     class Meta:
-        model = AppUser
+        model = User
         fields = [
             'username',
             'password',
@@ -33,6 +32,13 @@ class LoginForm(AuthenticationForm):
 
 
 class SignupForm(UserCreationForm):
+    username = forms.CharField(
+        min_length=4,
+        label='Username',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Enter Your Username...'}))
+
     email = forms.EmailField(
         max_length=50,
         required=True,
@@ -54,8 +60,9 @@ class SignupForm(UserCreationForm):
                 'placeholder': 'Repeat Your Password...'}))
 
     class Meta:
-        model = AppUser
-        fields = ('email',
+        model = User
+        fields = ('username',
+                  'email',
                   'password1',
                   'password2', )
 
@@ -82,7 +89,7 @@ class CustomPasswordChangeForm(PasswordChangeForm):
                 'placeholder': 'Repeat Your New Password...'}))
 
     class Meta:
-        model = AppUser
+        model = User
         fields = ('old_password',
                   'new_password1',
                   'new_password2')
@@ -97,7 +104,7 @@ class CustomPasswordResetForm(PasswordResetForm):
                 'placeholder': 'Enter Your Email...'}))
 
     class Meta:
-        model = AppUser
+        model = User
         fields = ('email')
 
 
@@ -115,6 +122,6 @@ class CustomSetPasswordForm(SetPasswordForm):
                 'placeholder': 'Repeat Your New Password...'}))
 
     class Meta:
-        model = AppUser
+        model = User
         fields = ('new_password1',
                   'new_password2')

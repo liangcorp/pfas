@@ -13,16 +13,10 @@
           <div class="text-center">
             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
           </div>
-          <form action="{% url 'accounts:register' %}" method='POST' class=" user">
+          <form method='POST' class=" user">
             {% csrf_token %}
             <div class="form-group">
-              {{ signup_form.email|as_crispy_field }}
-            </div>
-            <div class="form-group">
-              {{ signup_form.password1|as_crispy_field }}
-            </div>
-            <div class="form-group">
-              {{ signup_form.password2|as_crispy_field }}
+              {{ form |crispy}}
             </div>
             <input class="btn btn-primary btn-user btn-block" type="submit" value="Register Account" />
 
@@ -36,10 +30,10 @@
           </form>
           <hr>
           <div class="text-center">
-            <a class="small" href="{% url 'accounts:password_reset' %}">Forgot Password?</a>
+            <a class="small" href="{% url 'accounts:account_reset_password' %}">Forgot Password?</a>
           </div>
           <div class="text-center">
-            <a class="small" href="{% url 'accounts:login' %}">Already have an account? Login!</a>
+            <a class="small" href="{% url 'accounts:account_login' %}">Already have an account? Login!</a>
           </div>
         </div>
       </div>
