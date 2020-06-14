@@ -19,11 +19,11 @@ class Asset(models.Model):
     asset_description = models.CharField(max_length=30)
     asset_currency = models.CharField(max_length=10)
 
-    asset_initial_balance = models.DecimalField(max_digits=19,
-                                                decimal_places=2)
+    asset_initial_balance = models.DecimalField(
+        max_digits=19, decimal_places=2)
 
-    asset_current_balance = models.DecimalField(max_digits=19,
-                                                decimal_places=2)
+    asset_current_balance = models.DecimalField(
+        max_digits=19, decimal_places=2)
 
     asset_open_date = models.DateField('opening date')
 
