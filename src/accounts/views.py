@@ -69,7 +69,7 @@ def logout_user(request):
 
 
 class CutomeSignupView(SignupView):
-    """Use custome template for the signup form.
+    """Use custom template for the signup form.
     """
     template_name = 'accounts/signup.html'
 
@@ -108,24 +108,6 @@ class CustomPasswordResetFromKeyView(PasswordResetFromKeyView):
 
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = "accounts/change-password.html"
-
-
-"""
-# Create page that allow users to enter their email address
-class CustomPasswordResetView(PasswordResetView):
-    template_name = "accounts/forgot-password.html"
-    form_class = CustomPasswordResetForm
-    form = CustomPasswordResetForm()
-    from_email = "noreply@liangcorp.com"
-    subject_template_name = "accounts/password_reset_subject.txt"
-    email_template_name = "accounts/password_reset_email.html"
-    success_url = "/accounts/password_reset/done/"
-
-
-# Confirm that email had been sent
-class CustomPasswordResetDoneView(PasswordResetDoneView):
-    template_name = "accounts/password_reset_done.html"
-"""
 
 
 @login_required
