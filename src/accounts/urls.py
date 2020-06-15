@@ -2,20 +2,22 @@ from django.urls import path, re_path
 
 from . import views
 from .views import (
+    CustomLoginView,
     CutomeSignupView,
     CustomConfirmEmailView,
     CustomPasswordChangeView,
     CustomPasswordResetView,
     CustomEmailView,
-    CustomPasswordResetDoneView
+    CustomPasswordResetDoneView,
+    CustomPasswordResetFromKeyView
 )
 
 app_name = "accounts"
 
 urlpatterns = [
-    path('', views.login_user, name='account_login'),
+    path('', CustomLoginView.as_view(), name='account_login'),
 
-    path('login/', views.login_user, name='account_login'),
+    path('login/', CustomLoginView.as_view(), name='account_login'),
 
     path('logout/', views.logout_user, name='logout'),
 
@@ -39,11 +41,11 @@ urlpatterns = [
          name="account_reset_password_done"),
 
     re_path(r"^password/reset/key/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$",
-            views.password_reset_from_key,
+            CustomPasswordResetFromKeyView.as_view(),
             name="account_reset_password_from_key"),
 
-    path("password/reset/key/done/", views.password_reset_from_key_done,
-         name="account_reset_password_from_key_done"),
+    # path("password/reset/key/done/", views.password_reset_from_key_done,
+    #     name="account_reset_password_from_key_done"),
 
     path('signup/', CutomeSignupView.as_view(), name='account_signup'),
 

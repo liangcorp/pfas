@@ -15,6 +15,7 @@ from .forms import (
 
 from allauth.account.forms import LoginForm
 from allauth.account.views import (
+    LoginView,
     SignupView,
     EmailView,
     ConfirmEmailView,
@@ -63,9 +64,14 @@ def login_user(request):
     return render(request, "accounts/login.html", context)
 
 
+class CustomLoginView(LoginView):
+    template_name = "accounts/login.html"
+    success_url = "/app/"
+
+
 def logout_user(request):
     logout(request)
-    return redirect('accounts:login')
+    return redirect('accounts:account_login')
 
 
 class CutomeSignupView(SignupView):

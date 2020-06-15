@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+DATABASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -43,7 +43,14 @@ INSTALLED_APPS = [
     'accounts',
     'profiles',
     'crispy_forms',
-    # appuser',
+    # 'appuser',
+    # The following apps are required:
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -71,10 +78,24 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 WSGI_APPLICATION = 'pf_project.wsgi.application'
 
@@ -85,7 +106,7 @@ WSGI_APPLICATION = 'pf_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(DATABASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -115,6 +136,22 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
+SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -138,11 +175,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # AUTH_USER_MODEL = 'appuser.AppUser'
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_HOST = "localhost"
-# EMAIL_HOST_PASSWORD = "7CMpik5J8NV06OJE3TOpsA"
-# EMAIL_HOST_USER = "chen.liang.mail@protonmail.com"
-# EMAIL_PORT = "1025"
-# EMAIL_SUBJECT_PREFIX = "NOREPLY"
-# EMAIL_USE_TLS = True
+
+EMAIL_HOST = "192.168.1.9"
+EMAIL_PORT = "1025"
+EMAIL_SUBJECT_PREFIX = "NOREPLY"
