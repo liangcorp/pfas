@@ -177,6 +177,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # AUTH_USER_MODEL = 'appuser.AppUser'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_HOST = "192.168.1.9"
-EMAIL_PORT = "1025"
+EMAIL_HOST = "127.0.0.1"
+EMAIL_PORT = "2025"
 EMAIL_SUBJECT_PREFIX = "NOREPLY"
