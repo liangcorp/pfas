@@ -1,3 +1,4 @@
 argon2-cffi==20.1.0
 Django==3.0.7
 django-crispy-forms==1.9.1
+django-allauth==0.42.0
