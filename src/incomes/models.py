@@ -8,6 +8,7 @@ class Income(models.Model):
         max_digits=19, decimal_places=2)
     income_total = models.DecimalField(
         max_digits=19, decimal_places=2)
+    income_currency = models.CharField(max_length=10)
 
 
 def get_income_name(self):
@@ -20,3 +21,7 @@ def get_income_balance(self):
 
 def get_income_total(self):
     return self.income_total
+
+
+def get_income_currency(self):
+    return self.income_currency
