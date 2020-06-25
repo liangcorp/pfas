@@ -1,3 +1,5 @@
+import expenses.contants as constants
+
 from django.db import models
 
 
@@ -25,3 +27,27 @@ def get_expense_total(self):
 
 def get_expense_currency(self):
     return self.expense_currency
+
+
+class ExpenseTransaction(models.Model):
+    transaction_date = models.DateField(
+        (""), auto_now=True, auto_now_add=False)
+
+    transaction_description = models.CharField(
+        max_length=constants.DESCRIPTION_MAX_LENGTH)
+
+    transaction_category = models.CharField()
+
+    transaction_expense = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    transaction_rebate = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    transaction_result_balance = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    tranaction_reconciled = models.BooleanField(default=False)

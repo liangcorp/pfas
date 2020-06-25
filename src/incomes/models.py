@@ -1,3 +1,5 @@
+import incomes.constants as constants
+
 from django.db import models
 
 
@@ -25,3 +27,27 @@ def get_income_total(self):
 
 def get_income_currency(self):
     return self.income_currency
+
+
+class IncomeTransaction(models.Model):
+    transaction_date = models.DateField(
+        (""), auto_now=True, auto_now_add=False)
+
+    transaction_description = models.CharField(
+        max_length=constants.DESCRIPTION_MAX_LENGTH)
+
+    transaction_category = models.CharField()
+
+    transaction_charge = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    transaction_income = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    transaction_result_balance = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    tranaction_reconciled = models.BooleanField(default=False)

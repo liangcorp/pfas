@@ -1,3 +1,5 @@
+import assets.constants as constants
+
 from django.db import models
 
 
@@ -5,13 +7,11 @@ from django.db import models
 class Asset(models.Model):
     CASH = 'CASH'
     BANK = 'BANK'
-    STOCK = 'STOCK'
     ASSET = 'ASSET'
 
     CATEGORY_CHOICES = [
         (CASH, 'Cash'),
         (BANK, 'Bank'),
-        (STOCK, 'Stock'),
         (ASSET, 'Asset'),
     ]
 
@@ -20,10 +20,12 @@ class Asset(models.Model):
     asset_currency = models.CharField(max_length=10)
 
     asset_initial_balance = models.DecimalField(
-        max_digits=19, decimal_places=2)
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
 
     asset_current_balance = models.DecimalField(
-        max_digits=19, decimal_places=2)
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
 
     asset_open_date = models.DateField('opening date')
 
@@ -38,3 +40,27 @@ class Asset(models.Model):
 
     def get_asset_current_balance(self):
         return self.asset_current_balance
+
+
+class AssetTransaction(models.Model):
+    transaction_date = models.DateField(
+        (""), auto_now=True, auto_now_add=False)
+
+    transaction_description = models.CharField(
+        max_length=constants.DESCRIPTION_MAX_LENGTH)
+
+    transaction_category = models.CharField()
+
+    transaction_deposit = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    transaction_withdraw = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    transaction_result_balance = models.DecimalField(
+        max_digits=constants.CASH_MAX_DIGITS,
+        decimal_places=constants.CASH_DECIMAL_PLACES)
+
+    tranaction_reconciled = models.BooleanField(default=False)
